@@ -1,0 +1,6 @@
+services:
+  main:
+    build:
+      context: .
+    ports:
+      - 3000:8080

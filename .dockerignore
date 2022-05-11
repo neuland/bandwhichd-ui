@@ -1,0 +1,7 @@
+**/*
+!dist/
+!src/
+!Dockerfile
+!package-lock.json
+!package.json
+!webpack.config.js

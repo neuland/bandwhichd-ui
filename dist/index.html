@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>bandwhichd-ui</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <form method="get" name="configuration">
+                <label for="server">Server</label>
+                <input type="url" name="server" id="server">
+                <label for="reload">Reload every n seconds</label>
+                <input type="number" name="reload" id="reload">
+                <button type="submit">Submit</button>
+            </form>
+        </nav>
+    </header>
+    <main>
+        <section id="canvas"></section>
+    </main>
+    <script src="main.js"></script>
+</body>
+
+</html>

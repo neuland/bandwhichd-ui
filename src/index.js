@@ -30,7 +30,11 @@ const fetchData = async (server) => {
 
 const drawData = (container, data) => {
     const parsedData = VisNetwork.parseDOTNetwork(data)
-    new VisNetwork.Network(container, { nodes: parsedData.nodes, edges: parsedData.edges }, parsedData.options)
+    const options = parsedData.options
+    options.physics = {
+        solver: 'forceAtlas2Based'
+    }
+    new VisNetwork.Network(container, { nodes: parsedData.nodes, edges: parsedData.edges }, options)
 }
 
 const main = async () => {

@@ -1,16 +1,8 @@
-html, body {
+html, body, #root {
     height: 100%;
 }
 
-body {
+#root {
     display: flex;
     flex-direction: column;
-}
-
-body > main {
-    flex-grow: 1;
-}
-
-body > main > section#canvas {
-    height: calc(100% - 100px);
 }

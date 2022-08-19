@@ -1,7 +1,6 @@
 **/*
-!dist/
-!src/
-!Dockerfile
-!package-lock.json
 !package.json
-!webpack.config.js
+!public/
+!src/
+!tsconfig.json
+!yarn.lock

@@ -1,0 +1,10 @@
+.main {
+    align-items: stretch;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.main > * {
+    flex-grow: 1;
+}

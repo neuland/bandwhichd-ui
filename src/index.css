@@ -1,8 +1,9 @@
-html, body, #root {
+html, body, #bandwhichd-root {
     height: 100%;
 }
 
-#root {
-    display: flex;
-    flex-direction: column;
+#bandwhichd-root {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: min-content 1fr min-content;
 }

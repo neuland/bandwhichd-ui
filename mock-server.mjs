@@ -1,20 +1,20 @@
-import fs from 'fs'
-import http from 'http'
-import path from 'path'
-import process from 'process'
+import fs from "fs"
+import http from "http"
+import path from "path"
+import process from "process"
 
 const port = 8080
 
 const server = http.createServer((request, response) => {
     const chunks = []
 
-    request.on('data', chunk => {
+    request.on("data", chunk => {
         chunks.push(chunk)
     })
 
-    request.on('end', () => {
-        if (request.method !== 'GET'
-            || request.url !== '/v1/stats') {
+    request.on("end", () => {
+        if (request.method !== "GET"
+            || request.url !== "/v1/stats") {
             response.writeHead(404)
             response.end()
             return
@@ -27,16 +27,16 @@ const server = http.createServer((request, response) => {
         }
 
         const format =
-            request.headers.accept === 'text/vnd.graphviz; q=1.0'
-                ? 'dot'
-                : 'json'
+            request.headers.accept === "text/vnd.graphviz; q=1.0"
+                ? "dot"
+                : "json"
 
         const filePath = path.join(process.cwd(), `stats.${format}`)
         const fileStat = fs.statSync(filePath)
 
         response.writeHead(200, {
-            'Access-Control-Allow-Origin': '*',
-            'Content-Length': fileStat.size
+            "Access-Control-Allow-Origin": "*",
+            "Content-Length": fileStat.size
         })
         fs.createReadStream(filePath).pipe(response)
     })

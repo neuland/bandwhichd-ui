@@ -1,8 +1,16 @@
 FROM node:16.17.0-alpine AS build
 WORKDIR /home/node
-COPY --chown=node:node package.json yarn.lock ./
+COPY --chown=node:node \
+    package.json \
+    yarn.lock \
+    ./
 RUN yarn install --check-files
-COPY --chown=node:node tsconfig.json ./
+COPY --chown=node:node \
+    index.html \
+    tsconfig.json \
+    tsconfig.node.json \
+    vite.config.ts \
+    ./
 COPY --chown=node:node public ./public
 COPY --chown=node:node src ./src
 RUN yarn build
@@ -16,5 +24,5 @@ LABEL org.opencontainers.image.vendor="neuland – Büro für Informatik GmbH"
 LABEL org.opencontainers.image.licenses="MIT"
 LABEL org.opencontainers.image.title="bandwhichd-ui"
 LABEL org.opencontainers.image.description="bandwhichd ui displaying network topology and statistics"
-LABEL org.opencontainers.image.version="0.1.0"
-COPY --from=build --chown=root:root /home/node/build /usr/share/nginx/html
+LABEL org.opencontainers.image.version="0.2.0"
+COPY --from=build --chown=root:root /home/node/dist /usr/share/nginx/html

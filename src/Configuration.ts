@@ -2,10 +2,10 @@ export interface Configuration {
     apiServer: string;
 }
 
-if (process.env.NODE_ENV !== "production") {
+if (import.meta.env.DEV) {
     // @ts-ignore
     document.configuration = {
-        apiServer: process.env.REACT_APP_API_SERVER ?? "http://localhost:8080",
+        apiServer: import.meta.env.BANDWHICHD_API_SERVER,
     };
 }
 

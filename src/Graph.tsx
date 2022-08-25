@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import * as VisNetwork from "vis-network";
 import { Configuration, configuration } from "./Configuration";
+import { HostId } from "./Stats";
 
 const fetchData = async (configuration: Configuration): Promise<string> => {
     const response = await window.fetch(`${configuration.apiServer}/v1/stats`, {
@@ -12,9 +13,15 @@ const fetchData = async (configuration: Configuration): Promise<string> => {
     return response.text();
 }
 
-export const Graph: React.FC =
-    () => {
+export interface GraphProps {
+    maybeSelectedHostId: HostId | null,
+    setMaybeSelectedHostId: (maybeSelectedHostId: HostId | null) => void,
+}
+
+export const Graph: React.FC<GraphProps> =
+    (props) => {
         const containerRef = useRef<HTMLElement | null>(null);
+        const networkRef = useRef<VisNetwork.Network | null>(null);
 
         useEffect(() => {
             if (containerRef.current === null) {
@@ -22,22 +29,31 @@ export const Graph: React.FC =
             }
             const container = containerRef.current
 
-            let network: VisNetwork.Network | null = null;
             fetchData(configuration).then(data => {
                 // @ts-ignore
                 const parsedData = VisNetwork.parseDOTNetwork(data);
                 parsedData.options.physics = {
                     solver: "forceAtlas2Based"
                 };
-                network = new VisNetwork.Network(container, parsedData);
+                const network = new VisNetwork.Network(container, parsedData);
+                network.on("selectNode", (event) => {
+                    props.setMaybeSelectedHostId(event.nodes[0]);
+                })
+                networkRef.current = network;
             }).catch(console.error);
 
             return () => {
-                if (network !== null) {
-                    network.destroy();
+                if (networkRef.current !== null) {
+                    networkRef.current.destroy();
                 }
             }
         }, [containerRef]);
 
-        return <section ref={containerRef} style={{height: "calc(100% - 10px)"}}></section>;
+        useEffect(() => {
+            if (networkRef.current !== null && props.maybeSelectedHostId !== null) {
+                networkRef.current.selectNodes([props.maybeSelectedHostId]);
+            }
+        }, [networkRef, props.maybeSelectedHostId]);
+
+        return <section ref={containerRef} style={{ height: "calc(100% - 100px)" }}></section>;
     };

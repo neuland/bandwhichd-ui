@@ -1,4 +1,10 @@
 .footer {
+    background-color: #a01d31;
+    color: #ffffff;
     padding: .5em;
     text-align: center;
+}
+
+.footer a:any-link {
+    color: #ffffff;
 }

@@ -1,24 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import * as VisNetwork from 'vis-network'
 
 import './App.css';
+import { Configuration, configuration } from './Configuration';
 
-interface Configuration {
-  server: string;
-}
-
-const readConfigurationFromQueryParameters: () => Configuration =
-  () => {
-    const urlSearchParams = new URLSearchParams(window.location.search);
-    const server = urlSearchParams.get("server") || "";
-    return {
-      server,
-    };
-  };
-
-const fetchData = async (server: string): Promise<string> => {
-  const response = await window.fetch(`${server}/v1/stats`, {
+const fetchData = async (configuration: Configuration): Promise<string> => {
+  const response = await window.fetch(`${configuration.apiServer}/v1/stats`, {
     method: 'GET',
     headers: {
       'Accept': 'text/vnd.graphviz; q=1.0'
@@ -39,8 +27,6 @@ const drawData = (container: HTMLElement, data: string) => {
 
 export const App: React.FC =
   () => {
-    const [ server, setServer ] = useState<string>("");
-
     useEffect(() => {
       const maybeCanvas = document.getElementById("canvas");
       
@@ -49,33 +35,12 @@ export const App: React.FC =
       }
       const canvas = maybeCanvas;
       
-      const configuration = readConfigurationFromQueryParameters();
-      
-      setServer(configuration.server);
-
-      if (configuration.server === "") {
-        return;
-      }
-      
-      fetchData(configuration.server).then(data => {
+      fetchData(configuration).then(data => {
         drawData(canvas, data);
       }).catch(console.error);
     }, []);
 
-    return (
-      <>
-        <header>
-          <nav>
-            <form method="get" name="configuration">
-              <label htmlFor="server">Server</label>
-              <input type="url" name="server" id="server" value={server} onChange={e => setServer(e.target.value)} />
-              <button type="submit">Submit</button>
-            </form>
-          </nav>
-        </header>
-        <main>
-          <section id="canvas" style={{ height: "calc(100% - 100px)" }}></section>
-        </main>
-      </>
-    );
+    return <main>
+      <section id="canvas" style={{ height: "calc(100% - 100px)" }}></section>
+    </main>;
   };

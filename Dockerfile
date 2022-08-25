@@ -1,12 +1,13 @@
 FROM node:16.17.0-alpine AS build
 WORKDIR /home/node
 COPY --chown=node:node package.json yarn.lock ./
-RUN yarn install
+RUN yarn install --check-files
 COPY --chown=node:node tsconfig.json ./
 COPY --chown=node:node public ./public
 COPY --chown=node:node src ./src
 RUN yarn build
 FROM nginxinc/nginx-unprivileged:alpine
+COPY nginx.conf /etc/nginx/templates/default.conf.template
 LABEL org.opencontainers.image.authors="neuland Open Source Maintainers <opensource@neuland-bfi.de>"
 LABEL org.opencontainers.image.url="https://github.com/neuland/bandwhichd-ui"
 LABEL org.opencontainers.image.documentation="https://github.com/neuland/bandwhichd-ui"

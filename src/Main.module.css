@@ -8,6 +8,7 @@
 .main > aside {
     flex-grow: 0;
     flex-shrink: 0;
+    overflow-y: scroll;
 }
 
 .main > section {

@@ -12,10 +12,15 @@ export const Main: React.FC =
         const [maybeStats, setMaybeStats] = useState<Stats | null>(null);
         const [maybeSelectedHostId, setMaybeSelectedHostId] = useState<HostId | null>(null);
 
-        const maybeSelectedHost: Host | null =
+        const maybeSelectedHostWithoutId =
             maybeStats === null || maybeSelectedHostId === null
                 ? null
-                : maybeStats.hosts.get(maybeSelectedHostId, null);
+                : maybeStats.hosts.get(maybeSelectedHostId, null)
+
+        const maybeSelectedHost: Host & { hostId: HostId } | null =
+            maybeSelectedHostId === null || maybeSelectedHostWithoutId == null
+                ? null
+                : { hostId: maybeSelectedHostId, ...maybeSelectedHostWithoutId };
 
         useEffect(() => {
             fetchStats(configuration).then(stats => {
@@ -26,6 +31,6 @@ export const Main: React.FC =
         return <main className={styles.main}>
             <NodeSelector {...{ maybeStats, maybeSelectedHostId, setMaybeSelectedHostId }} />
             <Graph {...{ maybeSelectedHostId, setMaybeSelectedHostId }} />
-            <HostDetails {...{ maybeSelectedHost }} />
+            <HostDetails {...{ maybeStats, maybeSelectedHost, setMaybeSelectedHostId }} />
         </main>;
     };

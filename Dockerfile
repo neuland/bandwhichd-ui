@@ -24,5 +24,5 @@ LABEL org.opencontainers.image.vendor="neuland – Büro für Informatik GmbH"
 LABEL org.opencontainers.image.licenses="MIT"
 LABEL org.opencontainers.image.title="bandwhichd-ui"
 LABEL org.opencontainers.image.description="bandwhichd ui displaying network topology and statistics"
-LABEL org.opencontainers.image.version="0.2.0"
+LABEL org.opencontainers.image.version="0.3.0"
 COPY --from=build --chown=root:root /home/node/dist /usr/share/nginx/html

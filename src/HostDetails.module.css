@@ -1,7 +1,17 @@
-.hostDetails {
+.host-details {
     background-color: #eeeeee;
 }
 
-.hostDetails > section {
+.host-details > section {
     padding: .5em;
+}
+
+.host-details > section > ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.host-details > section > ul > li + li {
+    margin-top: .5em;
 }

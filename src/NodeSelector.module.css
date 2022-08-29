@@ -2,12 +2,16 @@
     background-color: #eeeeee;
 }
 
+.node-selector > section {
+    padding: .5em;
+}
+
 .node-selector > section > ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
 
-.node-selector > section > ul > li {
-    margin: .5em;
+.node-selector > section > ul > li + li {
+    margin-top: .5em;
 }

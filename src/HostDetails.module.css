@@ -1,0 +1,7 @@
+.hostDetails {
+    background-color: #eeeeee;
+}
+
+.hostDetails > section {
+    padding: .5em;
+}

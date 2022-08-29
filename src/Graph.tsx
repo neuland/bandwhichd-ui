@@ -1,7 +1,9 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as VisNetwork from "vis-network";
 import { Configuration, configuration } from "./Configuration";
 import { HostId } from "./Stats";
+
+import styles from "./Graph.module.css";
 
 const fetchData = async (configuration: Configuration): Promise<string> => {
     const response = await window.fetch(`${configuration.apiServer}/v1/stats`, {
@@ -20,15 +22,17 @@ export interface GraphProps {
 
 export const Graph: React.FC<GraphProps> =
     (props) => {
-        const containerRef = useRef<HTMLElement | null>(null);
+        const [isLoading, setIsLoading] = useState<Boolean>(true);
+        const containerRef = useRef<HTMLDivElement | null>(null);
         const networkRef = useRef<VisNetwork.Network | null>(null);
 
         useEffect(() => {
             if (containerRef.current === null) {
                 return;
             }
-            const container = containerRef.current
+            const container = containerRef.current;
 
+            setIsLoading(true);
             fetchData(configuration).then(data => {
                 // @ts-ignore
                 const parsedData = VisNetwork.parseDOTNetwork(data);
@@ -38,7 +42,10 @@ export const Graph: React.FC<GraphProps> =
                 const network = new VisNetwork.Network(container, parsedData);
                 network.on("selectNode", (event) => {
                     props.setMaybeSelectedHostId(event.nodes[0]);
-                })
+                });
+                network.on("afterDrawing", (_) => {
+                    setIsLoading(false);
+                });
                 networkRef.current = network;
             }).catch(console.error);
 
@@ -55,5 +62,8 @@ export const Graph: React.FC<GraphProps> =
             }
         }, [networkRef, props.maybeSelectedHostId]);
 
-        return <section ref={containerRef} style={{ height: "calc(100% - 100px)" }}></section>;
+        return <section>
+            { isLoading && <span className={styles.loading}>Loading…</span> }
+            <div className={styles.container} ref={containerRef}></div>
+        </section>;
     };

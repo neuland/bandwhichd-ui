@@ -5,6 +5,11 @@
     justify-content: space-between;
 }
 
-.main > * {
+.main > aside {
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
+.main > section {
     flex-grow: 1;
 }

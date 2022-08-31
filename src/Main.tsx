@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { configuration } from "./Configuration";
 import { Graph } from "./Graph";
 import { HostDetails } from "./HostDetails";
 
@@ -23,7 +22,7 @@ export const Main: React.FC =
                 : { hostId: maybeSelectedHostId, ...maybeSelectedHostWithoutId };
 
         useEffect(() => {
-            fetchStats(configuration).then(stats => {
+            fetchStats().then(stats => {
                 setMaybeStats(stats);
             }).catch(console.error);
         }, []);

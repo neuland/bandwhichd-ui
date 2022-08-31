@@ -1,4 +1,3 @@
-import { Configuration } from "./Configuration";
 import { Map } from "immutable";
 import * as Decoder from "io-ts/lib/Decoder"
 import { mapDecoder } from "./lib/immutable/io-ts/mapDecoder";
@@ -45,8 +44,8 @@ const statsDecoder = Decoder.struct({
 });
 
 export const fetchStats =
-    async (configuration: Configuration): Promise<Stats> =>
-        await window.fetch(`${configuration.apiServer}/v1/stats`, {
+    async (): Promise<Stats> =>
+        await window.fetch("/api/v1/stats", {
             method: "GET",
             headers: {
                 "Accept": "application/json; q=1.0"

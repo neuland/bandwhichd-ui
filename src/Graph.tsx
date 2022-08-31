@@ -1,12 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as VisNetwork from "vis-network";
-import { Configuration, configuration } from "./Configuration";
 import { HostId } from "./Stats";
 
 import styles from "./Graph.module.css";
 
-const fetchData = async (configuration: Configuration): Promise<string> => {
-    const response = await window.fetch(`${configuration.apiServer}/v1/stats`, {
+const fetchData = async (): Promise<string> => {
+    const response = await window.fetch("/api/v1/stats", {
         method: "GET",
         headers: {
             "Accept": "text/vnd.graphviz; q=1.0"
@@ -33,7 +32,7 @@ export const Graph: React.FC<GraphProps> =
             const container = containerRef.current;
 
             setIsLoading(true);
-            fetchData(configuration).then(data => {
+            fetchData().then(data => {
                 // @ts-ignore
                 const parsedData = VisNetwork.parseDOTNetwork(data);
                 parsedData.options.physics = {

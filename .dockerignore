@@ -1,10 +1,12 @@
 **/*
 !index.html
+!mocks/
 !nginx.conf
 !package.json
 !public/
 !src/
 !tsconfig.json
 !tsconfig.node.json
+!vite-plugin-serve-handler/
 !vite.config.ts
 !yarn.lock

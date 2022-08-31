@@ -5,5 +5,9 @@
     "moduleResolution": "Node",
     "allowSyntheticDefaultImports": true
   },
-  "include": ["vite.config.ts"]
+  "include": [
+    "mocks/",
+    "vite.config.ts",
+    "vite-plugin-serve-handler/",
+  ]
 }

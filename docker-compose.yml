@@ -4,4 +4,5 @@ services:
       context: .
     environment:
       BANDWHICHD_API_SERVER: http://127.0.0.1:8080
+      NGINX_ADDITIONAL_SERVER_CONFIGURATION: ""
     network_mode: host

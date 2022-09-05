@@ -27,9 +27,16 @@ const handleWithMocks =
         });
 
         request.on("end", () => {
-            if (request.method !== "GET"
-                || request.url !== "/api/v1/stats") {
+            if (request.url !== "/api/v1/stats") {
                 response.writeHead(404);
+                response.end();
+                return;
+            }
+
+            if (request.method !== "GET") {
+                response.writeHead(405, {
+                    "Allow": "GET",
+                });
                 response.end();
                 return;
             }
@@ -40,12 +47,7 @@ const handleWithMocks =
                 return;
             }
 
-            const format =
-                request.headers.accept === "text/vnd.graphviz; q=1.0"
-                    ? "dot"
-                    : "json";
-
-            const filePath = path.join(process.cwd(), 'mocks', `stats.${format}`);
+            const filePath = path.join(process.cwd(), 'mocks', `stats.json`);
             const fileStat = fs.statSync(filePath);
 
             response.writeHead(200, {

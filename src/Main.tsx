@@ -29,7 +29,7 @@ export const Main: React.FC =
 
         return <main className={styles.main}>
             <NodeSelector {...{ maybeStats, maybeSelectedHostId, setMaybeSelectedHostId }} />
-            <Graph {...{ maybeSelectedHostId, setMaybeSelectedHostId }} />
+            <Graph {...{ maybeStats, maybeSelectedHostId, setMaybeSelectedHostId }} />
             <HostDetails {...{ maybeStats, maybeSelectedHost, setMaybeSelectedHostId }} />
         </main>;
     };

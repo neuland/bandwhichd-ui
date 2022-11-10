@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { Map } from "immutable";
 import { Connection, Host, HostId, Stats, UnmonitoredHost } from "./Stats";
 
@@ -15,6 +16,15 @@ export const HostDetails: React.FC<HostDetailsProps> =
             return null;
         }
         const selectedHost = props.maybeSelectedHost;
+
+        const osReleasName: string =
+            selectedHost.os_release === null
+                ? "Unknown"
+                : selectedHost.os_release.pretty_name !== null
+                    && selectedHost.os_release.pretty_name.length > 0
+                    ? selectedHost.os_release.pretty_name
+                    : `${selectedHost.os_release.id} ${selectedHost.os_release.version_id}`;
+        const [showOsReleaseDetails, setShowOsReleaseDetails] = useState<boolean>(false);
 
         const connectionsToMonitoredHosts = selectedHost
             .connections
@@ -63,6 +73,32 @@ export const HostDetails: React.FC<HostDetailsProps> =
         return <aside className={style["host-details"]}>
             <section>
                 <p>{selectedHost.hostname}</p>
+                <p>OS: {osReleasName} {selectedHost.os_release && <button onClick={_ => setShowOsReleaseDetails(!showOsReleaseDetails)}>{showOsReleaseDetails ? "-" : "+"}</button>}</p>
+                {
+                    selectedHost.os_release && showOsReleaseDetails &&
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>Pretty name:</td>
+                                <td>
+                                    <code>{selectedHost.os_release?.pretty_name}</code>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Id:</td>
+                                <td>
+                                    <code>{selectedHost.os_release?.id}</code>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Version id:</td>
+                                <td>
+                                    <code>{selectedHost.os_release?.version_id}</code>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                }
             </section>
             <section>
                 {
@@ -75,7 +111,7 @@ export const HostDetails: React.FC<HostDetailsProps> =
                             {
                                 connectionsToMonitoredHosts
                                     .entrySeq()
-                                    .sortBy(([_, {hostDetails}]) => hostDetails.hostname)
+                                    .sortBy(([_, { hostDetails }]) => hostDetails.hostname)
                                     .map(([hostId, { hostDetails }]) => <li key={hostId}>
                                         {
                                             hostId === selectedHost.hostId
@@ -99,7 +135,7 @@ export const HostDetails: React.FC<HostDetailsProps> =
                             {
                                 connectionsToUnmonitoredHosts
                                     .entrySeq()
-                                    .sortBy(([_, {unmonitoredHostDetails}]) => unmonitoredHostDetails.host)
+                                    .sortBy(([_, { unmonitoredHostDetails }]) => unmonitoredHostDetails.host)
                                     .map(([hostId, { unmonitoredHostDetails }]) => <li key={hostId}>{unmonitoredHostDetails.host}</li>)
                             }
                         </ul>

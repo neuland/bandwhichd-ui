@@ -1,5 +1,18 @@
 .header {
-    background-color: #afbc00;
+    background-color: #a7af39;
     padding: .5em;
     text-align: right;
+}
+
+.header nav {
+    display: inline;
+}
+
+.header nav ul {
+    display: inline;
+    list-style-type: none;
+}
+
+.header nav ul li {
+    display: inline;
 }

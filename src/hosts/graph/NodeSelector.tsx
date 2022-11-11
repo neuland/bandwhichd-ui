@@ -1,5 +1,5 @@
 import React from "react";
-import { HostId, Stats } from "./Stats";
+import { HostId, Stats } from "../Stats";
 
 import styles from "./NodeSelector.module.css";
 

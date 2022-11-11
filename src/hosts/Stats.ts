@@ -1,9 +1,9 @@
 import { Map } from "immutable";
 import * as Decoder from "io-ts/lib/Decoder"
-import { mapDecoder } from "./lib/immutable/io-ts/mapDecoder";
-import { parseBodyAsJson, rejectNonOk } from "./lib/es/response/promiseUtils";
-import { decode } from "./lib/io-ts/promiseUtils";
-import { undefinedAsNullDecoder } from "./lib/io-ts/undefinedAsNullDecoder";
+import { mapDecoder } from "../lib/immutable/io-ts/mapDecoder";
+import { parseBodyAsJson, rejectNonOk } from "../lib/es/response/promiseUtils";
+import { decode } from "../lib/io-ts/promiseUtils";
+import { undefinedAsNullDecoder } from "../lib/io-ts/undefinedAsNullDecoder";
 
 
 const hostIdTag = Symbol("HostId");
@@ -41,6 +41,14 @@ const osReleaseDecoder = Decoder.struct({
     pretty_name: undefinedAsNullDecoder(osReleasePrettyNameDecoder),
     version_id: undefinedAsNullDecoder(osReleaseVersionIdDecoder),
 });
+export const osReleaseToString: (maybeOsRelease: OsRelease | null) => string =
+    (maybeOsRelease) =>
+        maybeOsRelease === null
+            ? "Unknown"
+            : maybeOsRelease.pretty_name !== null
+                && maybeOsRelease.pretty_name.length > 0
+                ? maybeOsRelease.pretty_name
+                : `${maybeOsRelease.id} ${maybeOsRelease.version_id}`;
 
 export interface Connection { }
 const connectionDecoder = Decoder.struct({});

@@ -1,0 +1,34 @@
+table.hosts-table {
+    border-collapse: collapse;
+}
+
+table.hosts-table thead {
+    position: sticky;
+    top: 0;
+}
+
+table.hosts-table th,
+table.hosts-table td {
+    padding: 12px;
+}
+
+table.hosts-table th {
+    background-color: #999;
+}
+
+table.hosts-table td {
+    background-color: #ccc;
+}
+
+table.hosts-table tr:nth-child(odd) td {
+    background-color: #eee;
+}
+
+table.hosts-table tr:hover td {
+    background-color: #a7af39;
+}
+
+table.hosts-table td.numeric {
+    padding: 12px 18px;
+    text-align: right;
+}

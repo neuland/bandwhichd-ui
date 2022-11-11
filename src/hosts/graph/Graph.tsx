@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as VisNetwork from "vis-network";
-import { HostId, Stats } from "./Stats";
+import { HostId, Stats } from "../Stats";
 
 import styles from "./Graph.module.css";
 import { Seq } from "immutable";

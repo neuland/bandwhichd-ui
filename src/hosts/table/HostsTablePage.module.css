@@ -1,0 +1,5 @@
+.main {
+    display: grid;
+    overflow-y: scroll;
+    place-items: center;
+}

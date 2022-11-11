@@ -1,0 +1,36 @@
+.start-page {
+    display: grid;
+    place-items: center;
+}
+
+.start-page nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.start-page nav ul li + li {
+    margin-top: 16px;
+}
+
+.start-page nav ul li button {
+    background-color: #eee;
+    border: none;
+    padding: 16px;
+    width: 100%;
+}
+
+.start-page nav ul li button:hover {
+    background-color: #a7af39;
+    cursor: pointer;
+}
+
+.title,
+.summary {
+    text-align: left;
+}
+
+.title {
+    font-size: 1.5em;
+    line-height: 1.8em;
+}

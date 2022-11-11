@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Map } from "immutable";
-import { Connection, Host, HostId, Stats, UnmonitoredHost } from "./Stats";
+import { Connection, Host, HostId, osReleaseToString, Stats, UnmonitoredHost } from "../Stats";
 
 import style from "./HostDetails.module.css";
 
@@ -17,13 +17,7 @@ export const HostDetails: React.FC<HostDetailsProps> =
         }
         const selectedHost = props.maybeSelectedHost;
 
-        const osReleasName: string =
-            selectedHost.os_release === null
-                ? "Unknown"
-                : selectedHost.os_release.pretty_name !== null
-                    && selectedHost.os_release.pretty_name.length > 0
-                    ? selectedHost.os_release.pretty_name
-                    : `${selectedHost.os_release.id} ${selectedHost.os_release.version_id}`;
+        const osReleasName: string = osReleaseToString(selectedHost.os_release);
         const [showOsReleaseDetails, setShowOsReleaseDetails] = useState<boolean>(false);
 
         const connectionsToMonitoredHosts = selectedHost
